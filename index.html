@@ -7,326 +7,463 @@
 <title>Smart Traffic Management System</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
 
-    body {
-        font-family: Arial, sans-serif;
-        background: #eef2f3;
-        color: #222;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    header {
-        background: #1e3a5f;
-        color: white;
-        text-align: center;
-        padding: 20px;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f3;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: #173b63;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+header p {
+    font-size: 15px;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    text-align: center;
+    min-width: 140px;
+}
+
+.card h3 {
+    color: #173b63;
+    margin-bottom: 8px;
+}
+
+.card span {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* STATUS */
+
+.status {
+    text-align: center;
+    font-size: 19px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+/* JUNCTION */
+
+.junction {
+    width: 700px;
+    max-width: 95%;
+    height: 500px;
+    margin: 20px auto;
+    position: relative;
+    background: #65a765;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* ROADS */
+
+.vertical-road {
+    position: absolute;
+    width: 190px;
+    height: 100%;
+    background: #333;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.horizontal-road {
+    position: absolute;
+    width: 100%;
+    height: 190px;
+    background: #333;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ROAD MARKINGS */
+
+.vertical-road::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    border-left: 4px dashed white;
+}
+
+.horizontal-road::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    border-top: 4px dashed white;
+}
+
+/* TRAFFIC LIGHTS */
+
+.traffic-light {
+    position: absolute;
+    background: #111;
+    padding: 8px;
+    border-radius: 10px;
+    z-index: 5;
+    display: flex;
+    gap: 5px;
+}
+
+.light {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #555;
+}
+
+.red.active {
+    background: red;
+    box-shadow: 0 0 15px red;
+}
+
+.yellow.active {
+    background: yellow;
+    box-shadow: 0 0 15px yellow;
+}
+
+.green.active {
+    background: limegreen;
+    box-shadow: 0 0 15px limegreen;
+}
+
+/* LIGHT POSITIONS */
+
+.north {
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.south {
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.east {
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.west {
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* CARS */
+
+.cars {
+    position: absolute;
+    font-size: 25px;
+    z-index: 4;
+}
+
+.north-cars {
+    top: 10px;
+    left: 47%;
+}
+
+.south-cars {
+    bottom: 10px;
+    left: 47%;
+}
+
+.east-cars {
+    right: 10px;
+    top: 47%;
+}
+
+.west-cars {
+    left: 10px;
+    top: 47%;
+}
+
+/* CONTROLS */
+
+.controls {
+    text-align: center;
+    margin: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    background: #173b63;
+    color: white;
+}
+
+button:hover {
+    background: #285987;
+}
+
+.emergency {
+    background: #d62828;
+}
+
+.emergency:hover {
+    background: #a91f1f;
+}
+
+/* NOTE */
+
+.simulation-note {
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    margin: 10px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #173b63;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
 
     header h1 {
-        margin-bottom: 8px;
-    }
-
-    header p {
-        font-size: 14px;
-    }
-
-    .dashboard {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        padding: 20px;
-    }
-
-    .card {
-        background: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-        text-align: center;
-        min-width: 150px;
-    }
-
-    .card h3 {
-        color: #1e3a5f;
-        margin-bottom: 8px;
-    }
-
-    .card span {
-        font-size: 25px;
-        font-weight: bold;
+        font-size: 21px;
     }
 
     .junction {
-        width: 700px;
-        max-width: 95%;
-        height: 500px;
-        margin: 20px auto;
-        position: relative;
-        background: #65a765;
-        overflow: hidden;
-        border-radius: 10px;
+        height: 400px;
     }
 
-    /* Roads */
     .vertical-road {
-        position: absolute;
-        width: 180px;
-        height: 100%;
-        background: #333;
-        left: 50%;
-        transform: translateX(-50%);
+        width: 130px;
     }
 
     .horizontal-road {
-        position: absolute;
-        width: 100%;
-        height: 180px;
-        background: #333;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    /* Road markings */
-    .vertical-road::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 0;
-        height: 100%;
-        border-left: 4px dashed white;
-    }
-
-    .horizontal-road::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        border-top: 4px dashed white;
-    }
-
-    /* Traffic lights */
-    .traffic-light {
-        position: absolute;
-        background: #111;
-        padding: 8px;
-        border-radius: 10px;
-        z-index: 5;
-        display: flex;
-        gap: 5px;
-    }
-
-    .light {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        background: #555;
-    }
-
-    .red.active {
-        background: red;
-        box-shadow: 0 0 15px red;
-    }
-
-    .yellow.active {
-        background: yellow;
-        box-shadow: 0 0 15px yellow;
-    }
-
-    .green.active {
-        background: limegreen;
-        box-shadow: 0 0 15px limegreen;
-    }
-
-    .north {
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .south {
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
+        height: 130px;
     }
 
     .east {
-        right: 80px;
-        top: 50%;
-        transform: translateY(-50%);
+        right: 20px;
     }
 
     .west {
-        left: 80px;
-        top: 50%;
-        transform: translateY(-50%);
+        left: 20px;
     }
 
-    /* Cars */
-    .cars {
-        position: absolute;
-        font-size: 25px;
-        z-index: 4;
-    }
+}
 
-    .north-cars {
-        top: 10px;
-        left: 50%;
-    }
-
-    .south-cars {
-        bottom: 10px;
-        left: 50%;
-    }
-
-    .east-cars {
-        right: 10px;
-        top: 50%;
-    }
-
-    .west-cars {
-        left: 10px;
-        top: 50%;
-    }
-
-    .controls {
-        text-align: center;
-        margin: 20px;
-    }
-
-    button {
-        padding: 12px 20px;
-        margin: 5px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 15px;
-        background: #1e3a5f;
-        color: white;
-    }
-
-    button:hover {
-        background: #2d5986;
-    }
-
-    .emergency {
-        background: #d62828;
-    }
-
-    .status {
-        text-align: center;
-        margin: 15px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .simulation-note {
-        text-align: center;
-        margin: 10px;
-        color: #666;
-        font-size: 13px;
-    }
-
-    footer {
-        background: #1e3a5f;
-        color: white;
-        text-align: center;
-        padding: 15px;
-        margin-top: 20px;
-    }
 </style>
 </head>
 
+
 <body>
 
+<!-- HEADER -->
+
 <header>
+
     <h1>🚦 Smart Traffic Management System</h1>
-    <p>Optimizing Urban Mobility using AI, IoT and Smart Signals</p>
+
+    <p>
+        Optimizing Urban Mobility using AI, IoT and Smart Signals
+    </p>
+
 </header>
 
-<!-- Dashboard -->
+
+<!-- TRAFFIC DASHBOARD -->
+
 <div class="dashboard">
 
     <div class="card">
+
         <h3>North</h3>
+
         <span id="northCount">18</span>
+
         <p>Vehicles</p>
+
     </div>
 
+
     <div class="card">
+
         <h3>East</h3>
+
         <span id="eastCount">10</span>
+
         <p>Vehicles</p>
+
     </div>
 
+
     <div class="card">
+
         <h3>South</h3>
+
         <span id="southCount">4</span>
+
         <p>Vehicles</p>
+
     </div>
 
+
     <div class="card">
+
         <h3>West</h3>
+
         <span id="westCount">16</span>
+
         <p>Vehicles</p>
+
     </div>
 
 </div>
+
+
+<!-- STATUS -->
 
 <div class="status">
-    Current Green Signal: <span id="currentRoad">North</span>
-    |
-    Time Remaining: <span id="timer">5</span>s
+
+    🚦 Green Signal:
+    <span id="currentRoad">North</span>
+
+    &nbsp; | &nbsp;
+
+    ⏱️ Time:
+    <span id="timer">5</span>s
+
 </div>
 
-<!-- Junction -->
+
+<!-- TRAFFIC JUNCTION -->
+
 <div class="junction">
 
     <div class="vertical-road"></div>
+
     <div class="horizontal-road"></div>
 
-    <!-- North Traffic Light -->
+
+    <!-- NORTH LIGHT -->
+
     <div class="traffic-light north">
+
         <div class="light red" id="northRed"></div>
+
         <div class="light yellow" id="northYellow"></div>
+
         <div class="light green" id="northGreen"></div>
+
     </div>
 
-    <!-- South Traffic Light -->
+
+    <!-- SOUTH LIGHT -->
+
     <div class="traffic-light south">
+
         <div class="light red" id="southRed"></div>
+
         <div class="light yellow" id="southYellow"></div>
+
         <div class="light green" id="southGreen"></div>
+
     </div>
 
-    <!-- East Traffic Light -->
+
+    <!-- EAST LIGHT -->
+
     <div class="traffic-light east">
+
         <div class="light red" id="eastRed"></div>
+
         <div class="light yellow" id="eastYellow"></div>
+
         <div class="light green" id="eastGreen"></div>
+
     </div>
 
-    <!-- West Traffic Light -->
+
+    <!-- WEST LIGHT -->
+
     <div class="traffic-light west">
+
         <div class="light red" id="westRed"></div>
+
         <div class="light yellow" id="westYellow"></div>
+
         <div class="light green" id="westGreen"></div>
+
     </div>
 
-    <!-- Cars -->
-    <div class="cars north-cars">🚗 🚙 🚕</div>
-    <div class="cars south-cars">🚗 🚙</div>
-    <div class="cars east-cars">🚕 🚗 🚙</div>
-    <div class="cars west-cars">🚗 🚕 🚙</div>
+
+    <!-- CARS -->
+
+    <div class="cars north-cars">
+        🚗 🚙 🚕
+    </div>
+
+    <div class="cars south-cars">
+        🚗 🚙
+    </div>
+
+    <div class="cars east-cars">
+        🚕 🚗 🚙
+    </div>
+
+    <div class="cars west-cars">
+        🚗 🚕 🚙
+    </div>
 
 </div>
 
-<!-- Controls -->
+
+<!-- BUTTONS -->
+
 <div class="controls">
 
     <button onclick="changeSignal()">
@@ -339,76 +476,126 @@
 
 </div>
 
+
 <p class="simulation-note">
-    ⚠️ Traffic data shown here is simulated for prototype demonstration.
+
+    ⚠️ Traffic data is simulated for prototype demonstration.
+
 </p>
 
+
 <footer>
-    Smart Traffic Management System | ESP32 + AI + IoT Concept
+
+    Smart Traffic Management System |
+    ESP32 + AI + IoT Concept
+
 </footer>
+
 
 <script>
 
-const roads = ["North", "East", "South", "West"];
+/* ROADS */
+
+const roads = [
+    "North",
+    "East",
+    "South",
+    "West"
+];
+
+
+/* CURRENT ROAD */
 
 let currentIndex = 0;
+
+
+/* TIMER */
+
 let timeLeft = 5;
 
+
+/* TRAFFIC DATA */
+
 let traffic = {
+
     North: 18,
+
     East: 10,
+
     South: 4,
+
     West: 16
+
 };
 
 
-/* Set traffic signal */
+/* SET SIGNAL */
 
 function setSignal(road) {
 
-    roads.forEach(r => {
+    roads.forEach(function(r) {
 
-        document.getElementById(r.toLowerCase() + "Red")
-            .classList.remove("active");
+        let name = r.toLowerCase();
 
-        document.getElementById(r.toLowerCase() + "Yellow")
-            .classList.remove("active");
+        document
+        .getElementById(name + "Red")
+        .classList.remove("active");
 
-        document.getElementById(r.toLowerCase() + "Green")
-            .classList.remove("active");
+        document
+        .getElementById(name + "Yellow")
+        .classList.remove("active");
+
+        document
+        .getElementById(name + "Green")
+        .classList.remove("active");
 
     });
 
-    document.getElementById(
-        road.toLowerCase() + "Green"
-    ).classList.add("active");
+
+    /* Green for selected road */
+
+    document
+    .getElementById(road.toLowerCase() + "Green")
+    .classList.add("active");
+
+
+    /* Update display */
 
     document.getElementById("currentRoad").innerText = road;
+
 }
 
 
-/* Change signal */
+/* CHANGE SIGNAL */
 
 function changeSignal() {
 
     currentIndex++;
 
     if (currentIndex >= roads.length) {
+
         currentIndex = 0;
+
     }
+
 
     setSignal(roads[currentIndex]);
 
+
     timeLeft = 5;
-    document.getElementById("timer").innerText = timeLeft;
+
+    document.getElementById("timer").innerText =
+        timeLeft;
+
 }
 
 
-/* Countdown */
+/* AUTOMATIC TIMER */
 
 setInterval(function() {
 
     timeLeft--;
+
 
     if (timeLeft <= 0) {
 
@@ -416,16 +603,19 @@ setInterval(function() {
 
     }
 
-    document.getElementById("timer").innerText = timeLeft;
+
+    document.getElementById("timer").innerText =
+        timeLeft;
 
 }, 1000);
 
 
-/* Simulate vehicles leaving */
+/* VEHICLES LEAVE WHEN GREEN */
 
 setInterval(function() {
 
     let road = roads[currentIndex];
+
 
     if (traffic[road] > 0) {
 
@@ -440,21 +630,34 @@ setInterval(function() {
 }, 1000);
 
 
-/* Emergency vehicle */
+/* EMERGENCY MODE */
 
 function emergencyMode() {
 
     alert("🚑 Emergency vehicle detected!");
 
-    setSignal("North");
+
+    /*
+       Emergency vehicle is detected.
+       North gets priority in this prototype.
+    */
 
     currentIndex = 0;
 
+    setSignal("North");
+
+
     timeLeft = 8;
 
-    document.getElementById("timer").innerText = timeLeft;
+    document.getElementById("timer").innerText =
+        timeLeft;
 
 }
+
+
+/* START */
+
+setSignal("North");
 
 </script>
 
